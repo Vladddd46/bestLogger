@@ -48,7 +48,11 @@ public:
     // queue, which stores logs, so that ProcessMessages thread could get logs from it and write in file.
     static std::queue<Log> logStorage;
 
-    Logger() = default;
+    Logger() = delete;
+    Logger(const Logger&) = delete;
+    Logger(Logger&&) = delete;
+    Logger& operator=(const Logger&) = delete;
+    Logger& operator=(Logger&&) = delete;
 
     /* @brief: Initialize Logger.
      * @param:
