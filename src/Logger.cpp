@@ -83,7 +83,7 @@ bool Logger::Init(const std::filesystem::path &filePath, const std::thread::id &
     return result;
 }
 
-void Logger::log(const std::string& logMessage)
+void Logger::Log(const std::string& logMessage)
 {
 	std::lock_guard<std::mutex> lock(mutex_);
 

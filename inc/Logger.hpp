@@ -69,7 +69,7 @@ public:
 
     /* @brief: creates Log object and adds it to queue.
      */
-    static void log(const std::string& logMessage);
+    static void Log(const std::string& logMessage);
 
 private:
     /* @brief: finds file associated with threadId and writes log in it.
