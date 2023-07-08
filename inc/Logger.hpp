@@ -23,7 +23,7 @@ typedef struct
 {
     std::string msg;
     std::thread::id threadId;
-} Log;
+} Log_t;
 
 
 class Logger
@@ -103,7 +103,7 @@ private:
     static std::condition_variable conditionVariable_;
     
     // queue, which stores logs, so that ProcessMessages thread could get logs from it and write in file.
-    static std::queue<Log> logStorage;
+    static std::queue<Log_t> logStorage;
 };
 
 

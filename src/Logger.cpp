@@ -6,7 +6,7 @@ std::map<std::filesystem::path, std::ofstream> Logger::fds;
 std::mutex Logger::mutex_;
 std::mutex Logger::logFilemutex_;
 std::condition_variable Logger::conditionVariable_;
-std::queue<Log> Logger::logStorage;
+std::queue<Log_t> Logger::logStorage;
 bool Logger::isInited =  false;
 
 
@@ -88,7 +88,7 @@ void Logger::log(const std::string& logMessage)
 	std::lock_guard<std::mutex> lock(mutex_);
 
 	// creating Log object and adding it to queue
-	Log tmpLog;
+	Log_t tmpLog;
 	tmpLog.msg = logMessage;
 	tmpLog.threadId = std::this_thread::get_id();
 	logStorage.push(tmpLog);
@@ -130,7 +130,7 @@ void Logger::ProcessMessages()
 	{
 		std::unique_lock<std::mutex> lock(mutex_);
 		conditionVariable_.wait(lock, []() { return !logStorage.empty(); });
-		Log logObj = logStorage.front();
+		Log_t logObj = logStorage.front();
 		logStorage.pop();
 
 		// create log message.
