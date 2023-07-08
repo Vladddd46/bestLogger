@@ -62,24 +62,27 @@ public:
      */
     static bool ChangeLogFile(const std::filesystem::path &filePath, const std::thread::id &threadId);
 
-    /* @brief: finds file associated with threadId and writes log in it.
-     */
-    static bool WriteLogMessageInFile(const std::string &logmsg, const std::thread::id &threadId);
 
     /* @brief: shows, all info about logfiles.
     */
     static void ShowLogFiles();
+
     /* @brief: creates Log object and adds it to queue.
      */
     static void log(const std::string& logMessage);
 
 private:
+    /* @brief: finds file associated with threadId and writes log in it.
+     */
+    static bool WriteLogMessageInFile(const std::string &logmsg, const std::thread::id &threadId);
+
     /* @brief: takes Log object from logStorage queue and writes it in file.
      *         It is running in separate thread!
      */
     static void ProcessMessages();
 
     /* @brief: reopens logfiles every day.
+     *         It is running in separate thread!
      */
     static void ReopenLogFiles();
 
