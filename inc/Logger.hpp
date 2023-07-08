@@ -29,25 +29,6 @@ typedef struct
 class Logger
 {
 public:
-    static bool isInited;
-
-    // associate thread, with logfile, where this thread should write log.
-    static std::map<std::thread::id, std::filesystem::path> logFiles;
-
-    // logfile pathes associated with file descriptors.
-    static std::map<std::filesystem::path, std::ofstream> fds;
-
-    static std::mutex mutex_;
-
-    // mutex for working with logfiles.
-    static std::mutex logFilemutex_;
-
-    // is used to notify, that Log was added to logStorage. 
-    static std::condition_variable conditionVariable_;
-    
-    // queue, which stores logs, so that ProcessMessages thread could get logs from it and write in file.
-    static std::queue<Log> logStorage;
-
     Logger() = delete;
     Logger(const Logger&) = delete;
     Logger(Logger&&) = delete;
@@ -92,6 +73,7 @@ public:
      */
     static void log(const std::string& logMessage);
 
+private:
     /* @brief: takes Log object from logStorage queue and writes it in file.
      *         It is running in separate thread!
      */
@@ -100,6 +82,25 @@ public:
     /* @brief: reopens logfiles every day.
      */
     static void ReopenLogFiles();
+
+        static bool isInited;
+
+    // associate thread, with logfile, where this thread should write log.
+    static std::map<std::thread::id, std::filesystem::path> logFiles;
+
+    // logfile pathes associated with file descriptors.
+    static std::map<std::filesystem::path, std::ofstream> fds;
+
+    static std::mutex mutex_;
+
+    // mutex for working with logfiles.
+    static std::mutex logFilemutex_;
+
+    // is used to notify, that Log was added to logStorage. 
+    static std::condition_variable conditionVariable_;
+    
+    // queue, which stores logs, so that ProcessMessages thread could get logs from it and write in file.
+    static std::queue<Log> logStorage;
 };
 
 
